@@ -36,10 +36,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Deploy to production
+    - name: Deploy backend to production
       uses: johnbeynon/render-deploy-action@v0.0.8
       with:
         service-id: ${{ secrets.RENDER_BACKEND_KEY }}
+        api-key: ${{ secrets.RENDER_API_KEY }}
+    - name: Wait 60 seconds
+      run: sleep 60
+
+  deploy-frontend: 
+    needs: deploy-backend
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy frontend to production
+      uses: johnbeynon/render-deploy-action@v0.0.8
+      with:
+        service-id: ${{ secrets.RENDER_FRONTEND_KEY }}
         api-key: ${{ secrets.RENDER_API_KEY }}
     - name: Wait 60 seconds
       run: sleep 60
