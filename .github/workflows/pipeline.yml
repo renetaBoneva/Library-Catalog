@@ -1,4 +1,4 @@
-name: Build And Test
+name: Build Test Deploy
 on:
   push:
     branches: [ "main" ]
@@ -20,6 +20,8 @@ jobs:
       run: npm install
     - name: Install Playwright
       run: npx playwright install
+    - name: Change the config value
+      run: echo "export const settings = { host:\'http://localhost:3000\' };" > config.js
     - name: Start Backend
       run: npm run start-be &
     - name: Wait 5 seconds
